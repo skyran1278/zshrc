@@ -81,7 +81,7 @@ export NVM_LAZY_LOAD=true
 # source $ZSH/oh-my-zsh.sh
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/.zsh-nvm/zsh-nvm.plugin.zsh
+source ~/.zsh/zsh-nvm/zsh-nvm.plugin.zsh
 # Note the source command must be at the end of ~/.zshrc.
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
