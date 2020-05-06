@@ -64,7 +64,7 @@
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # for zsh-nvm. It must be set before zsh-nvm is loaded.
-# export NVM_LAZY_LOAD=true
+export NVM_LAZY_LOAD=true
 
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -79,7 +79,10 @@
 # )
 
 # source $ZSH/oh-my-zsh.sh
+
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/.zsh-nvm/zsh-nvm.plugin.zsh
+# Note the source command must be at the end of ~/.zshrc.
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 fpath+=$HOME/.zsh/pure
