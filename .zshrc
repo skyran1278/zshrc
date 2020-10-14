@@ -70,17 +70,19 @@ ZSH_THEME=""
 # Add wisely, as too many plugins slow down shell startup.
 
 # for zsh-nvm. It must be set before zsh-nvm is loaded.
+# Lazy loading is around 70x faster
 export NVM_LAZY_LOAD=true
 
 plugins=(
   git
   zsh-autosuggestions
-  zsh-syntax-highlighting
   zsh-nvm
+  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
 
+# Initialize the prompt system (if not so already) and choose pure
 fpath+=$HOME/.zsh/pure
 autoload -U promptinit; promptinit
 prompt pure
