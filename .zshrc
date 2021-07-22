@@ -119,8 +119,8 @@ fi
 eval "$(fasd --init auto)"
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/.zsh-nvm/zsh-nvm.plugin.zsh
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # Note the source command must be at the end of ~/.zshrc.
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # source $ZSH/oh-my-zsh.sh
 
