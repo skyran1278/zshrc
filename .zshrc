@@ -12,6 +12,7 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+# https://askubuntu.com/questions/716535/zsh-suggesting-what-packages-to-install
 source /etc/zsh_command_not_found
 
 alias aws="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli"
