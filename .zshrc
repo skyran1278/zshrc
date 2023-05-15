@@ -13,7 +13,8 @@ source ~/.powerlevel10k/powerlevel10k.zsh-theme
 alias aws="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli"
 
 if [ -z "$VSCODE_PID" ]; then
-    export NVM_LAZY_LOAD=true
+  export NVM_LAZY_LOAD=true
+  export NVM_COMPLETION=true
 fi
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
