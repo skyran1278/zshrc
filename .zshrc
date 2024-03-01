@@ -28,9 +28,6 @@ setopt auto_pushd             # automatically push directories onto directory st
 setopt pushd_ignore_dups
 setopt pushdminus             # cd -
 
-# correction
-setopt correct_all            #  autocorrect command typos
-
 # prompt
 setopt prompt_subst           # Allows prompt strings to be evaluated for parameter expansion, command substitution, and arithmetic expansion.
 
