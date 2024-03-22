@@ -74,6 +74,9 @@ local-sync() {
   # https://www.postgresql.org/docs/current/app-psql.html
   docker exec -i dentsu-postgres pg_dump --host=10.0.0.10 --port=5433 --dbname=dentsu-piano-dev --username=dentsu_user --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=postgres --dbname=postgres --verbose --no-owner
 
+  # home mac to windows
+  # docker exec -i dentsu-postgres pg_dump --host=192.168.0.255 --port=5432 --dbname=postgres --username=postgres --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=postgres --dbname=postgres --verbose --no-owner
+
   # server to local
   # docker exec -i dentsu-postgres pg_dump --host=10.0.0.10 --port=5433 --dbname=dentsu-piano-dev --username=dentsu_user --format=custom --verbose --no-owner --data-only --disable-triggers --superuser=dentsu_user | docker exec -i dentsu-postgres pg_restore --username=postgres --dbname=postgres --verbose --no-owner --disable-triggers --superuser=postgres
   # local to server
