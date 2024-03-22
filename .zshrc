@@ -43,7 +43,7 @@ alias pn="pnpm"
 local-restart() {
   docker stop dentsu-postgres
   docker rm -v dentsu-postgres
-  docker run --name dentsu-postgres -e POSTGRES_PASSWORD=root -p 5432:5432 --restart=always -d postgres:14.7
+  docker run --name dentsu-postgres -e POSTGRES_PASSWORD=root -p 5432:5432 --restart=always -d postgres:15
   until docker exec dentsu-postgres pg_isready; do
     echo -e "\033[31m$(date) - waiting for postgres...\033[0m"
     sleep 1
@@ -63,7 +63,7 @@ local-seed() {
 local-sync() {
   docker stop dentsu-postgres
   docker rm -v dentsu-postgres
-  docker run --name dentsu-postgres -e POSTGRES_PASSWORD=root -p 5432:5432 --restart=always -d postgres:14.7
+  docker run --name dentsu-postgres -e POSTGRES_PASSWORD=root -p 5432:5432 --restart=always -d postgres:15
   until docker exec dentsu-postgres pg_isready; do
     echo -e "\033[31m$(date) - waiting for postgres...\033[0m"
     sleep 1
