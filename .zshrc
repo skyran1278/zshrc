@@ -35,6 +35,13 @@ setopt prompt_subst           # Allows prompt strings to be evaluated for parame
 setopt interactive_comments  # Allow comments even in interactive shells.
 
 alias aws="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli"
+alias np="pnpm"
+alias pn="pnpm"
+
+test_restart() {
+  docker-compose down --remove-orphans
+  docker-compose up -d
+}
 
 if [ -z "$VSCODE_PID" ]; then
   export NVM_LAZY_LOAD=true
@@ -46,3 +53,10 @@ source ~/.zsh/zsh-nvm/zsh-nvm.plugin.zsh
 
 # Note the source command must be at the end of ~/.zshrc.
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# https://github.com/zsh-users/zsh-history-substring-search
+# If you want to use zsh-syntax-highlighting along with this script, then make sure that you load it before you load this script:
+source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
