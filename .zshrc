@@ -58,5 +58,10 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # If you want to use zsh-syntax-highlighting along with this script, then make sure that you load it before you load this script:
 source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 
+# wsl2
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
+
+# mac
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
