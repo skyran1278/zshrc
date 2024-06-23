@@ -34,6 +34,7 @@ setopt prompt_subst           # Allows prompt strings to be evaluated for parame
 # comment
 setopt interactive_comments  # Allow comments even in interactive shells.
 
+# https://docs.aws.amazon.com/cli/latest/userguide/getting-started-docker.html#cliv2-docker-aliases
 alias aws="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli"
 alias np="pnpm"
 alias pn="pnpm"
