@@ -48,6 +48,50 @@ alias np="pnpm"
 alias pn="pnpm"
 
 # === Custom Functions ===
+local_restart() {
+  docker stop dentsu-postgres
+  docker rm -v dentsu-postgres
+  docker run --name dentsu-postgres -e POSTGRES_USER=dentsu_user -e POSTGRES_PASSWORD=foritech -e POSTGRES_DB=dentsu-piano-dev -p 4320:5432 --restart=always -d postgres
+  until docker exec dentsu-postgres pg_isready; do
+    echo -e "\033[31m$(date) - waiting for postgres...\033[0m"
+    sleep 1
+  done
+
+  echo -e "\033[32mPostgres is ready.\033[0m"
+  echo
+}
+
+local_sync_dev() {
+  local_restart
+
+  # https://www.postgresql.org/docs/current/app-psql.html
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+}
+
+local_sync_qa() {
+  local_restart
+
+  # https://www.postgresql.org/docs/current/app-psql.html
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+}
+
+local_sync_staging() {
+  local_restart
+
+  # https://www.postgresql.org/docs/current/app-psql.html
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_stg --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+}
+
+dev_sync_qa() {
+  docker exec -it dentsu-postgres psql --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev -c "
+    DROP SCHEMA \"piano-main\" CASCADE;
+    DROP SCHEMA \"piano-bpm\" CASCADE;
+  "
+
+  # https://www.postgresql.org/docs/current/app-psql.html
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --verbose --no-owner
+}
+
 test3_restart() {
   docker compose down --remove-orphans -v
   docker compose up -d
