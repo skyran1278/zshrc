@@ -61,6 +61,13 @@ local_restart() {
   echo
 }
 
+local_sync_4i() {
+  local_restart
+
+  # https://www.postgresql.org/docs/current/app-psql.html
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+}
+
 local_sync_dev() {
   local_restart
 
