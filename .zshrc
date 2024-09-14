@@ -99,6 +99,25 @@ dev_sync_qa() {
   docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --verbose --no-owner
 }
 
+4i_sync_dev() {
+  docker exec -it dentsu-postgres psql --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev -c "
+    DROP SCHEMA \"piano-main\" CASCADE;
+    DROP SCHEMA \"piano-bpm\" CASCADE;
+  "
+
+  # https://www.postgresql.org/docs/current/app-psql.html
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --verbose --no-owner
+}
+
+exec_sql_to_4_environments() {
+  sql=$1
+
+  docker exec -it dentsu-postgres psql --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev -c "$sql"
+  docker exec -it dentsu-postgres psql --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev -c "$sql"
+  docker exec -it dentsu-postgres psql --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa -c "$sql"
+  docker exec -it dentsu-postgres psql --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_stg -c "$sql"
+}
+
 test3_restart() {
   docker compose down --remove-orphans -v
   docker compose up -d
