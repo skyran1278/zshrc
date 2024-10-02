@@ -49,9 +49,8 @@ alias pn="pnpm"
 
 # === Custom Functions ===
 local_restart() {
-  docker stop dentsu-postgres
-  docker rm -v dentsu-postgres
-  docker run --name dentsu-postgres -e POSTGRES_USER=dentsu_user -e POSTGRES_PASSWORD=foritech -e POSTGRES_DB=dentsu-piano-dev -p 4320:5432 --restart=always -d postgres
+  docker compose down -v dentsu-postgres
+  docker compose up -d dentsu-postgres
   until docker exec dentsu-postgres pg_isready; do
     echo -e "\033[31m$(date) - waiting for postgres...\033[0m"
     sleep 1
