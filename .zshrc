@@ -60,25 +60,6 @@ local_restart() {
   echo
 }
 
-local_test() {
-  docker stop dentsu-postgres
-  docker rm -v dentsu-postgres
-  docker run --name dentsu-postgres -e POSTGRES_USER=dentsu_user -e POSTGRES_PASSWORD=foritech -e POSTGRES_DB=dentsu-piano-dev -p 4320:5432 --restart=always -d postgres
-  until docker exec dentsu-postgres pg_isready; do
-    echo -e "\033[31m$(date) - waiting for postgres...\033[0m"
-    sleep 1
-  done
-
-  echo -e "\033[32mPostgres is ready.\033[0m"
-  echo
-
-  cat test/migrations/init-seed.sql | docker exec -i dentsu-postgres psql --dbname=postgresql://dentsu_user:foritech@localhost:5432/dentsu-piano-dev
-  pnpm run typeorm migration:run -d libs/bpm-db/migration.config.ts
-  pnpm run typeorm migration:run -d libs/db/migration.config.ts
-  pnpm run typeorm migration:run -d test/piano.migration.config.ts
-  DOTENV_CONFIG_PATH=.env.test pnpm run test:e2e --setupFiles=dotenv/config $@
-}
-
 local_sync_4i() {
   local_restart
 
