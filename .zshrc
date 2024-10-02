@@ -12,6 +12,7 @@ source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
 # https://linux.die.net/man/1/zshoptions
 # history
+HISTFILE=$HOME/.zsh_history
 HISTSIZE=2000                 # in-memory
 SAVEHIST=1000                 # history file
 setopt extended_history       # record timestamp of command in HISTFILE
@@ -40,8 +41,8 @@ alias np="pnpm"
 alias pn="pnpm"
 
 test_restart() {
-  docker-compose down --remove-orphans
-  docker-compose up -d
+  docker compose down --remove-orphans -v
+  docker compose up -d
 }
 
 if [ -z "$VSCODE_PID" ]; then
