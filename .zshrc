@@ -40,7 +40,7 @@ alias aws="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cl
 alias np="pnpm"
 alias pn="pnpm"
 
-test_restart() {
+test3_restart() {
   docker compose down --remove-orphans -v
   docker compose up -d
 }
