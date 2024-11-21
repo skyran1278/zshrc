@@ -64,28 +64,28 @@ local_sync_4i() {
   local_restart
 
   # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
 }
 
 local_sync_dev() {
   local_restart
 
   # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
 }
 
 local_sync_qa() {
   local_restart
 
   # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
 }
 
 local_sync_staging() {
   local_restart
 
   # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_stg --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_stg --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
 }
 
 dev_sync_qa() {
@@ -95,7 +95,7 @@ dev_sync_qa() {
   "
 
   # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --verbose --no-owner
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --verbose --no-owner
 }
 
 4i_sync_dev() {
@@ -105,7 +105,7 @@ dev_sync_qa() {
   "
 
   # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --verbose --no-owner
+  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --verbose --no-owner
 }
 
 exec_sql_to_4_environments() {
