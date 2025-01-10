@@ -11,9 +11,9 @@ source ~/.powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# === History Configuration ===
 # https://github.com/ohmyzsh/ohmyzsh/blob/eeb01c18c1d1edff0c2563764a998b2d30947844/lib/history.zsh
 # https://linux.die.net/man/1/zshoptions
-# history
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=50000                # Max in-memory history entries
 SAVEHIST=10000                # Max history entries saved to file
@@ -24,7 +24,7 @@ setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt share_history          # share command history data
 
-# Prompt Options
+# === Prompt Options ===
 setopt prompt_subst           # Allows prompt strings to be evaluated for parameter expansion, command substitution, and arithmetic expansion.
 setopt interactive_comments   # any line beginning with # in your terminal will be ignored by Zsh.
 
