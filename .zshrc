@@ -11,6 +11,15 @@ source ~/.powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# === SSH Agent Management ===
+# wsl only
+# if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+#   eval `ssh-agent`
+#   ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+# fi
+# export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+# ssh-add -l > /dev/null || ssh-add
+
 # === History Configuration ===
 # https://github.com/ohmyzsh/ohmyzsh/blob/eeb01c18c1d1edff0c2563764a998b2d30947844/lib/history.zsh
 # https://linux.die.net/man/1/zshoptions
