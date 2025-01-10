@@ -41,9 +41,9 @@ test3_restart() {
 }
 
 # === Compinit ===
-fpath=(~/.zsh/zsh-deno $fpath)
-autoload -Uz compinit
-compinit -u
+# fpath=(~/.zsh/zsh-deno $fpath)
+# autoload -Uz compinit
+# compinit -u
 
 # === Plugins ===
 # Ensure plugins are loaded after compinit
@@ -56,7 +56,7 @@ if [ -z "$VSCODE_PID" ]; then
 fi
 
 . ~/.zsh/zsh-nvm/zsh-nvm.plugin.zsh
-. ~/.deno/env
+# . ~/.deno/env
 
 # Note the source command must be at the end of ~/.zshrc.
 . ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
