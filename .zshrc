@@ -13,10 +13,10 @@ source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
 # === SSH Agent Management ===
 # wsl only
-# also should add to ~/.bash_profile for vscode extension
 # https://unix.stackexchange.com/a/316560
 # Note that ssh-add without arguments adds ~/.ssh/id_rsa, ~/.ssh/id_ecdsa, ~/.ssh/id_ed25519.
 # You might want to pass ssh-add arguments if your private keys are in another file.
+# ~/.zshrc for zsh shell and ~/.profile for vscode extension
 # if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 #   eval `ssh-agent` > /dev/null
 #   ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
