@@ -108,13 +108,21 @@ dev_sync_qa() {
   docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --verbose --no-owner
 }
 
-exec_sql_to_4_environments() {
-  sql=$1
+sync_mongo() {
+  docker compose down -v mongodb
+  docker compose up -d mongodb
 
-  docker exec -it dentsu-postgres psql --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev -c "$sql"
-  docker exec -it dentsu-postgres psql --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev -c "$sql"
-  docker exec -it dentsu-postgres psql --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa -c "$sql"
-  docker exec -it dentsu-postgres psql --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_stg -c "$sql"
+  echo
+  until docker exec lipo-mongo mongosh lipo --eval "db.runCommand({ ping: 1 }).ok" | grep "1" > /dev/null 2>&1; do
+    echo "\033[31mWaiting for database 'lipo' to be reachable...\033[0m"
+    echo
+    sleep 2
+  done
+  echo "\033[32mDatabase 'lipo' is ready!\033[0m"
+  echo
+
+  docker exec -i lipo-mongo mongodump --uri=mongodb://root:4itech@10.0.0.10:27017/lipo --out ./mongo
+  docker exec -i lipo-mongo mongorestore --uri=mongodb://root:4itech@localhost:27017/lipo ./mongo/lipo
 }
 
 test3_restart() {
