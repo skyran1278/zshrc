@@ -53,7 +53,7 @@ test3_restart() {
 }
 
 # === Compinit ===
-# fpath=(~/.zsh/zsh-deno $fpath)
+# fpath=(~/.zsh/completions $fpath)
 # autoload -Uz compinit
 # compinit -u
 
