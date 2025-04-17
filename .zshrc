@@ -48,67 +48,67 @@ alias np="pnpm"
 alias pn="pnpm"
 
 # === Custom Functions ===
-local_restart() {
-  docker compose down -v dentsu-postgres
-  docker compose up -d dentsu-postgres
-  until docker exec dentsu-postgres pg_isready; do
-    echo -e "\033[31m$(date) - waiting for postgres...\033[0m"
-    sleep 1
-  done
+# local_restart() {
+#   docker compose down -v dentsu-postgres
+#   docker compose up -d dentsu-postgres
+#   until docker exec dentsu-postgres pg_isready; do
+#     echo -e "\033[31m$(date) - waiting for postgres...\033[0m"
+#     sleep 1
+#   done
 
-  echo -e "\033[32mPostgres is ready.\033[0m"
-  echo
-}
+#   echo -e "\033[32mPostgres is ready.\033[0m"
+#   echo
+# }
 
-local_sync_4i() {
-  local_restart
+# local_sync_4i() {
+#   local_restart
 
-  # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
-}
+#   # https://www.postgresql.org/docs/current/app-psql.html
+#   docker exec -i dentsu-postgres pg_dump --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+# }
 
-local_sync_dev() {
-  local_restart
+# local_sync_dev() {
+#   local_restart
 
-  # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
-}
+#   # https://www.postgresql.org/docs/current/app-psql.html
+#   docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+# }
 
-local_sync_qa() {
-  local_restart
+# local_sync_qa() {
+#   local_restart
 
-  # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
-}
+#   # https://www.postgresql.org/docs/current/app-psql.html
+#   docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+# }
 
-local_sync_staging() {
-  local_restart
+# local_sync_staging() {
+#   local_restart
 
-  # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_stg --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
-}
+#   # https://www.postgresql.org/docs/current/app-psql.html
+#   docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_stg --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --username=dentsu_user --dbname=dentsu-piano-dev --verbose --no-owner
+# }
 
-dev_sync_qa() {
-  docker exec -it dentsu-postgres psql --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev -c "
-    DROP SCHEMA \"piano-main\" CASCADE;
-    DROP SCHEMA \"piano-bpm\" CASCADE;
-  "
+# dev_sync_qa() {
+#   docker exec -it dentsu-postgres psql --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev -c "
+#     DROP SCHEMA \"piano-main\" CASCADE;
+#     DROP SCHEMA \"piano-bpm\" CASCADE;
+#   "
 
-  # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --verbose --no-owner
-}
+#   # https://www.postgresql.org/docs/current/app-psql.html
+#   docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_qa --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --verbose --no-owner
+# }
 
-4i_sync_dev() {
-  docker exec -it dentsu-postgres psql --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev -c "
-    DROP SCHEMA \"piano-main\" CASCADE;
-    DROP SCHEMA \"piano-bpm\" CASCADE;
-  "
+# 4i_sync_dev() {
+#   docker exec -it dentsu-postgres psql --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev -c "
+#     DROP SCHEMA \"piano-main\" CASCADE;
+#     DROP SCHEMA \"piano-bpm\" CASCADE;
+#   "
 
-  # https://www.postgresql.org/docs/current/app-psql.html
-  docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --verbose --no-owner
-}
+#   # https://www.postgresql.org/docs/current/app-psql.html
+#   docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --verbose --no-owner
+# }
 
-sync_mongo() {
+sync_dev() {
   docker compose down -v mongodb
   docker compose up -d mongodb
 
@@ -122,6 +122,23 @@ sync_mongo() {
   echo
 
   docker exec -i lipo-mongo mongodump --uri=mongodb://root:4itech@10.0.0.10:27017/lipo --out ./mongo
+  docker exec -i lipo-mongo mongorestore --uri=mongodb://root:4itech@localhost:27017/lipo ./mongo/lipo
+}
+
+sync_staging() {
+  docker compose down -v mongodb
+  docker compose up -d mongodb
+
+  echo
+  until docker exec lipo-mongo mongosh lipo --eval "db.runCommand({ ping: 1 }).ok" | grep "1" > /dev/null 2>&1; do
+    echo "\033[31mWaiting for database 'lipo' to be reachable...\033[0m"
+    echo
+    sleep 2
+  done
+  echo "\033[32mDatabase 'lipo' is ready!\033[0m"
+  echo
+
+  docker exec -i lipo-mongo mongodump --uri=mongodb://root:4itech@10.9.1.80:27017/lipo --out ./mongo
   docker exec -i lipo-mongo mongorestore --uri=mongodb://root:4itech@localhost:27017/lipo ./mongo/lipo
 }
 
