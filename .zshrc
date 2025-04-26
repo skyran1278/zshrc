@@ -43,6 +43,7 @@ setopt interactive_comments   # any line beginning with # in your terminal will 
 # === Aliases ===
 # https://docs.aws.amazon.com/cli/latest/userguide/getting-started-docker.html#cliv2-docker-aliases
 alias aws="docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli"
+alias mongo="docker run --user $(id -u):$(id -g) --rm -it -v $(pwd):/mongo mongo"
 alias np="pnpm"
 alias pn="pnpm"
 
