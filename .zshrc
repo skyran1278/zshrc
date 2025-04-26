@@ -53,6 +53,11 @@ test3_restart() {
   docker compose up -d
 }
 
+espm_restore() {
+  mongo mongodump --uri=url --out /mongo/backup
+  mongo mongorestore --drop --uri=url /mongo/backup
+}
+
 # === Compinit ===
 # fpath=(~/.zsh/completions $fpath)
 # autoload -Uz compinit
