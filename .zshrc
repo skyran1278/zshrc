@@ -109,37 +109,13 @@ alias pn="pnpm"
 # }
 
 sync_dev() {
-  docker compose down -v mongodb
-  docker compose up -d mongodb
-
-  echo
-  until docker exec lipo-mongo mongosh lipo --eval "db.runCommand({ ping: 1 }).ok" | grep "1" > /dev/null 2>&1; do
-    echo "\033[31mWaiting for database 'lipo' to be reachable...\033[0m"
-    echo
-    sleep 2
-  done
-  echo "\033[32mDatabase 'lipo' is ready!\033[0m"
-  echo
-
   docker exec -i lipo-mongo mongodump --uri=mongodb://root:4itech@10.0.0.10:27017/lipo --out ./mongo
-  docker exec -i lipo-mongo mongorestore --uri=mongodb://root:4itech@localhost:27017/lipo ./mongo/lipo
+  docker exec -i lipo-mongo mongorestore --drop --uri=mongodb://root:4itech@localhost:27017/lipo ./mongo/lipo
 }
 
 sync_staging() {
-  docker compose down -v mongodb
-  docker compose up -d mongodb
-
-  echo
-  until docker exec lipo-mongo mongosh lipo --eval "db.runCommand({ ping: 1 }).ok" | grep "1" > /dev/null 2>&1; do
-    echo "\033[31mWaiting for database 'lipo' to be reachable...\033[0m"
-    echo
-    sleep 2
-  done
-  echo "\033[32mDatabase 'lipo' is ready!\033[0m"
-  echo
-
   docker exec -i lipo-mongo mongodump --uri=mongodb://root:4itech@10.9.1.80:27017/lipo --out ./mongo
-  docker exec -i lipo-mongo mongorestore --uri=mongodb://root:4itech@localhost:27017/lipo ./mongo/lipo
+  docker exec -i lipo-mongo mongorestore --drop --uri=mongodb://root:4itech@localhost:27017/lipo ./mongo/lipo
 }
 
 test3_restart() {
