@@ -108,14 +108,16 @@ alias pn="pnpm"
 #   docker exec -i dentsu-postgres pg_dump --dbname=postgresql://adminlogin:Welcome%401234@azjaw1dpiadbp01.postgres.database.azure.com:5432/dentsu_piano_dev --format=custom --exclude-table-data=piano-main.audit_log --exclude-table-data=piano-bpm.audit_log --verbose --no-owner | docker exec -i dentsu-postgres pg_restore --dbname=postgresql://dentsu_user:foritech@10.0.0.10:4320/dentsu-piano-dev --verbose --no-owner
 # }
 
-sync_dev() {
-  docker exec -i lipo-mongo mongodump --uri=mongodb://root:4itech@10.0.0.10:27017/lipo --out ./mongo
-  docker exec -i lipo-mongo mongorestore --drop --uri=mongodb://root:4itech@localhost:27017/lipo ./mongo/lipo
-}
+sync_db() {
+  local SRC_IP=$1
+  local TARGET_IP=$2
 
-sync_staging() {
-  docker exec -i lipo-mongo mongodump --uri=mongodb://root:4itech@10.9.1.80:27017/lipo --out ./mongo
-  docker exec -i lipo-mongo mongorestore --drop --uri=mongodb://root:4itech@localhost:27017/lipo ./mongo/lipo
+  # 10.0.0.63
+  # 10.0.0.10
+  # 10.9.1.80
+  # 10.9.1.90
+  docker exec -i lipo-mongo mongodump --uri=mongodb://root:4itech@$SRC_IP:27017/lipo --out ./mongo
+  docker exec -i lipo-mongo mongorestore --drop --uri=mongodb://root:4itech@$TARGET_IP:27017/lipo ./mongo/lipo
 }
 
 test3_restart() {
