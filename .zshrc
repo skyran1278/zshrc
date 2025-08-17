@@ -59,9 +59,9 @@ espm_restore() {
 }
 
 # === Compinit ===
-# fpath=(~/.zsh/completions $fpath)
-# autoload -Uz compinit
-# compinit -u
+fpath=(~/.zsh/completions $fpath)
+autoload -Uz compinit
+compinit -u
 
 # === Plugins ===
 # Ensure plugins are loaded after compinit
