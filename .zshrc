@@ -71,10 +71,12 @@ espm_restore() {
 if [ -z "$VSCODE_PID" ]; then
   export NVM_LAZY_LOAD=true
   export NVM_COMPLETION=true
+  export VSCODE_SUGGEST=1
 fi
 
 . ~/.zsh/zsh-nvm/zsh-nvm.plugin.zsh
 # . ~/.deno/env
+# . "$HOME/.local/bin/env"
 
 # Note the source command must be at the end of ~/.zshrc.
 . ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -82,6 +84,35 @@ fi
 # https://github.com/zsh-users/zsh-history-substring-search
 # If you want to use zsh-syntax-highlighting along with this script, then make sure that you load it before you load this script:
 . ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/Users/ran/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/Users/ran/miniconda3/etc/profile.d/conda.sh" ]; then
+#         . "/Users/ran/miniconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/Users/ran/miniconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+
+# === VS Code Terminal Shell Integration ===
+# Enable rich shell integration in VS Code's integrated terminal
+# https://code.visualstudio.com/docs/terminal/shell-integration
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+  # Performance-first: inline the script path to avoid spawning Node on each shell startup
+  VS_CODE_ZSH_INTEGRATION="/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/contrib/terminal/common/scripts/shellIntegration-rc.zsh"
+  if [[ -r "$VS_CODE_ZSH_INTEGRATION" ]]; then
+    . "$VS_CODE_ZSH_INTEGRATION"
+  # Fallback to portable approach if the app path differs (e.g., non-standard install)
+  elif command -v code >/dev/null 2>&1; then
+    . "$(code --locate-shell-integration-path zsh)"
+  fi
+fi
 
 # === Keybindings ===
 # wsl2
